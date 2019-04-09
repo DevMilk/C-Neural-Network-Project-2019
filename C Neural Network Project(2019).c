@@ -369,7 +369,7 @@ int main(){
 
 	//Networku oluştur
 	TOPOLOGY network=create_network(matrix,bias);
-	train(network,input,target,actfunc,"backpropogation");
+	train(network,input,target,actfunc,"genetic_algorithm");
 	printf("\n\n");
 
 	return 0;
