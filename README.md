@@ -1,0 +1,8 @@
+# C-Neural-Network-Project-2019-
+C Neural Network with using Genetic Algorithm to Train network.
+
+NOT FINISHED YET, GOING TO:
+1. ADD ENGLISH COMMENTS ON CODE,  
+2. ADD DYNAMIC ARRAYS
+3. FIX BACKPROPOGATION 
+4. ADD DROPOUT MECHANISM ON BACKPROPOGATION
