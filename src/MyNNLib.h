@@ -134,7 +134,7 @@ TOPOLOGY* create_network(int* matrix, int n,double* bias,double(**actfunc)(doubl
 	int i=0,col,j;
 	TOPOLOGY* tmp=(TOPOLOGY*)malloc(sizeof(TOPOLOGY)); //Allocation for toğology
 	tmp->layerSize=n;
-	tmp->layers=(LAYER*)malloc(n*sizeof(LAYER)); //Topolojinin satırlarının atanması
+	tmp->layers=(LAYER*)malloc(n*sizeof(LAYER)); //Allocation of Layers in Topology
 	tmp->weights=(double**)malloc((n-1)*sizeof(double*)); //Allocation of weights
 	tmp->bias =(double*) malloc((n-1)*sizeof(double)); //Allocation for biases
 	tmp->actfunc=(double(**)(double))malloc(sizeof(double(*)(double))*(tmp->layerSize-1));//Allocation for activation functions
@@ -183,16 +183,16 @@ void *threadfeed(void* args){
 	double** weights=((PARAM*)args)->weights;
 	int neuronsize = ((PARAM*)args)->neuronsize;
 	int i = ((PARAM*)args)->i;
-		for(j=startIndex;j<nls;j++){// SONRAKİ LAYERDAKİ NÖRONLARI GEZEN
+		for(j=startIndex;j<nls;j++){
 			X=0;
-			for(k=0;k<neuronsize;k++){ // Base layerdaki nöron ve ağırlıkları gezen
+			for(k=0;k<neuronsize;k++){ 
 					X += network->layers[i].neurons[k].data*weights[i][j+k*nls];
 			}
 			X+=network->bias[i];
 			if(i==network->layerSize-2 && network->USE_SOFTMAX == 1)
 				network->layers[i+1].neurons[j].data=X;
 			else
-				network->layers[i+1].neurons[j].data=network->actfunc[i](X); //Aktivasyon fonksiyonuna X passlanması
+				network->layers[i+1].neurons[j].data=network->actfunc[i](X);
 			if(i>0 && i<network->layerSize-1 && dropped[i][j]==1)
 				network->layers[i+1].neurons[j].data=0;	
 
@@ -223,9 +223,9 @@ void feed_forward(TOPOLOGY* network,double* input,double** weights,int dropout_r
 				dropped[i][j]=0;
 		}
 	}
-	for(i=0;i<network->layerSize-1;i++){ //LAYERLARI GEZEN
-		neuronsize=network->layers[i].neuronsize; //i. layerdaki nöron sayısı
-		nls= network->layers[i+1].neuronsize; //sonraki layerın nöron sayısı
+	for(i=0;i<network->layerSize-1;i++){ 
+		neuronsize=network->layers[i].neuronsize; //Neuron count of i th Layer
+		nls= network->layers[i+1].neuronsize; //Neuron count of next layer
 		//parameters for Thread function
 		pthread_t Thread;
 		PARAM* parametreler=(PARAM*)malloc(sizeof(PARAM));
@@ -234,20 +234,19 @@ void feed_forward(TOPOLOGY* network,double* input,double** weights,int dropout_r
 		parametreler->network=network;
 		parametreler->neuronsize=neuronsize;
 		parametreler->nls=nls;
-		//KATMANLARDA TEK SAYILI NÖRON SAYISI OLMASI DURUMUNDAKİ SORUNU SONRADAN DÜZELT
 		parametreler->startIndex=nls/2;
 		parametreler->weights=weights;
 		pthread_create(&Thread, NULL, threadfeed, parametreler);
-		for(j=0;j<nls/2;j++){// SONRAKİ LAYERDAKİ NÖRONLARI GEZEN
+		for(j=0;j<nls/2;j++){
 			X=0;
-			for(k=0;k<neuronsize;k++){ // Base layerdaki nöron ve ağırlıkları gezen
+			for(k=0;k<neuronsize;k++){
 					X += network->layers[i].neurons[k].data*weights[i][j+k*nls];
 			}
 			X+=network->bias[i];
 			if(i==network->layerSize-2 && network->USE_SOFTMAX == 1)
 				network->layers[i+1].neurons[j].data=X;
 			else
-				network->layers[i+1].neurons[j].data=network->actfunc[i](X); //Aktivasyon fonksiyonuna X passlanması
+				network->layers[i+1].neurons[j].data=network->actfunc[i](X); //Passing X to activation function
 			if(i>0 && i<network->layerSize-1 && dropped[i][j]==1)
 				network->layers[i+1].neurons[j].data=0;	
 
@@ -429,7 +428,6 @@ void train(TOPOLOGY* network,TRAINING_SET** samples,int sample_size ,char* train
 			int itr= sample_size/batch_size;
 			
 			
-			//İ OLAN DÖNGÜNÜN İÇİNE İ'Lİ BAŞKA DÖNGÜ VAR??
 			//Get delta weights from 1 batch
 			for(f=0;f<itr;f++){
 				for(j=0;j<batch_size;j++){
