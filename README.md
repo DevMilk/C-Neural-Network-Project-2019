@@ -1,14 +1,12 @@
 # C-Neural-Network-Project-2019-
-C Neural Network with using Genetic Algorithm to Train network.
+Neural Network project in C
 
-CURRENT ACTIVATION FUNCTIONS: SIGMOID, RELU
-HYPER PARAMETERS CAN BE MODIFIED BY MACROS INSIDE CODE
+-Users can create topology of your neural network with hyperparameters, neurons per layer, activation functions per layer as you wish quickly with functions at MyNNLib.h library.
 
-BACKPROPOGATION AND GENETIC ALGORITHM TECHNIQUES AVALAIBLE
-GENETIC ALGORITHM TECHNIQUE IS %69 MORE EFFECTIVE THAN BACKPROPOGATION (TESTED WITH 300 ITERATIONS/GENERATIONS)
+-Users can initialize sample set using training set structures and functions in MyNNLib.h library
 
-NOT FINISHED YET, GOING TO:
-1. ADD ENGLISH COMMENTS ON CODE,  
-2. ADD DYNAMIC ARRAYS
-3. FIX BACKPROPOGATION 
-4. ADD DROPOUT MECHANISM ON BACKPROPOGATION
+-Users can train Neural Network they created with training sample set also they created, using train function in MyNNLib.h library
+
+-Example Neural Network program can be viewed in repository
+
+
