@@ -1,6 +1,8 @@
 # C-Neural-Network-Project-2019-
 Neural Network project in C
 
+-Used only using C standart libraries
+
 -Users can create topology of your neural network with hyperparameters, neurons per layer, activation functions per layer as you wish quickly with functions at MyNNLib.h library.
 
 -Users can initialize sample set using training set structures and functions in MyNNLib.h library
