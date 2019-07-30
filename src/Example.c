@@ -16,7 +16,7 @@ int main(){
 	//AllCreate Network
 	TOPOLOGY* network=create_network(matrix,3,bias,act);
 	int j;
-	network->USE_SOFTMAX=1;
+	network->USE_SOFTMAX=1; //Softmax enabled, network will use Softmax instead of sigmoid in last layer as activation function
 	double input7[2]={6,12}; //1
 	double input2[2]={3,6}; //1
 	double input8[2]={100,2}; //0
