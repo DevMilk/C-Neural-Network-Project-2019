@@ -206,7 +206,7 @@ void feed_forward(TOPOLOGY* network,double* input,double** weights,int dropout_r
 	int target_size = network->layers[network->layerSize-1].neuronsize;
 	softinput=(double*)malloc(sizeof(double)*network->layers[network->layerSize-1].neuronsize);
 
-	//inputların verilmesi
+	//Give Inputs
 	for(i=0;i<input_size;i++)
 		network->layers[0].neurons[i].data=input[i];
 	int** dropped;
