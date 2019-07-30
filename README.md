@@ -9,6 +9,8 @@ Neural Network project in C
 
 -Users can train Neural Network they created with training sample set also they created, using train function in MyNNLib.h library
 
+-Users can save or load Neural Network as binary file
+
 -Training is not fully optimized but it works very fast compared to high-level languages like Python and uses threads to speed up backpropogation and feed-forward functions
 
 -Example Neural Network program can be viewed in repository
