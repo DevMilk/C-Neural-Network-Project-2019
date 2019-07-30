@@ -5,9 +5,9 @@ Neural Network project in C
 -Training is not fully optimized but it works very fast compared to high-level languages like Python and uses threads to speed up backpropogation and feed-forward functions
 
 
--Used only using C standart libraries
+-I wrote library using only C standart libraries
 
--Users can create topology of your neural network with hyperparameters, neurons per layer, activation functions per layer as you wish quickly with functions at MyNNLib.h library.
+-Users can create topology of their Neural Network with Layer Count, hyperparameters, Neurons Per Layer, Activation Functions per layer as they wish quickly with functions at MyNNLib.h library.
 
 -Users can initialize sample set using training set structures and functions in MyNNLib.h library
 
