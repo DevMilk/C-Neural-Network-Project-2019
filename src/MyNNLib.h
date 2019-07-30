@@ -7,6 +7,7 @@
 #define max(a,b) (((a)>(b)) ? (a) : (b))
 
 
+//AKTİVASYON FONKSİYONLARI DOSYAYA YAZILACKA
 
 //EXAMPLE USAGE
 /*
@@ -128,7 +129,8 @@ TRAINING_SET** init_sample_set(int,int,int); //Inıtialize sample set
 void shuffle(TRAINING_SET**, int); //Shuffle array
 void printLayer(TOPOLOGY*,int); //Print 
 double randn(double,double); //Function for generating random double numbers using normal distribution function (mu,sigma)
-
+int save_network(TOPOLOGY*,char*);
+void load_network(TOPOLOGY*,char*);
 TOPOLOGY* create_network(int* matrix, int n,double* bias,double(**actfunc)(double)){
 
 	int i=0,col,j;
@@ -553,4 +555,50 @@ double randn (double mu, double sigma){
  
   return (mu + sigma * (double) X1);
 }
+int save_network(TOPOLOGY* network, char* fileName){
+	int i;
+	FILE* file=fopen(fileName,"w+b");
+	fwrite(&(network->error),sizeof(double),1,file);
+	fwrite(&(network->layerSize),sizeof(int),1,file);
+	fwrite((network->layers),network->layerSize*sizeof(LAYER),1,file);	
+	for(i=0;i<network->layerSize;i++)
+		fwrite(network->layers[i].neurons,network->layers[i].neuronsize*sizeof(NEURON),1,file);
+	fwrite(&(network->REG_PARAMETER),sizeof(double),1,file);
+	fwrite(&(network->USE_SOFTMAX),sizeof(short int),1,file);
+	
+	fwrite((network->bias),(network->layerSize-1)*sizeof(double),1,file);
+	
+	for(i=0;i<network->layerSize-1;i++)
+		fwrite(network->weights[i],network->layers[i].neuronsize*network->layers[i+1].neuronsize*sizeof(double),1,file);
+	
+	fwrite((network->actfunc),(network->layerSize-1)*sizeof(double(*)(double)),1,file);
+	fclose(file);
+	return 0;
+}
+void load_network(TOPOLOGY* network,char* fileName){
+	int i;
+	network->layers=(LAYER*)malloc(sizeof(LAYER));
+	network->bias=(double*)malloc(sizeof(double));
+	network->weights=(double**)malloc(sizeof(double*));
+	FILE* file=fopen(fileName,"rb");
+	
+	fread(&(network->error),sizeof(double),1,file);
+	fread(&(network->layerSize),sizeof(int),1,file);
+	fread((network->layers),network->layerSize*sizeof(LAYER),1,file);	
+	for(i=0;i<network->layerSize;i++){
+		network->layers[i].neurons=(NEURON*)malloc(network->layers[i].neuronsize*sizeof(NEURON));
+		fread(network->layers[i].neurons,network->layers[i].neuronsize*sizeof(NEURON),1,file);	
+	}		
+	fread(&(network->REG_PARAMETER),sizeof(double),1,file);
+	fread(&(network->USE_SOFTMAX),sizeof(short int),1,file);
 
+	fread((network->bias),(network->layerSize-1)*sizeof(double),1,file);
+	
+	for(i=0;i<network->layerSize-1;i++){
+		network->weights[i]=(double*)malloc(network->layers[i].neuronsize*network->layers[i+1].neuronsize*sizeof(double));
+		fread(network->weights[i],network->layers[i].neuronsize*network->layers[i+1].neuronsize*sizeof(double),1,file);
+	}
+	network->actfunc=(double(**)(double))malloc(sizeof(double(*)(double))*(network->layerSize-1));//Allocation for activation functions	
+	fread((network->actfunc),(network->layerSize-1)*sizeof(double(*)(double)),1,file);
+	fclose(file);
+}
