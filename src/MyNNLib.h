@@ -129,8 +129,8 @@ TRAINING_SET** init_sample_set(int,int,int); //Inıtialize sample set
 void shuffle(TRAINING_SET**, int); //Shuffle array
 void printLayer(TOPOLOGY*,int); //Print 
 double randn(double,double); //Function for generating random double numbers using normal distribution function (mu,sigma)
-int save_network(TOPOLOGY*,char*);
-void load_network(TOPOLOGY*,char*);
+int save_network(TOPOLOGY*,char*); //Saves network by binary format to a file 
+void load_network(TOPOLOGY*,char*); //Loads network from file from binary format
 TOPOLOGY* create_network(int* matrix, int n,double* bias,double(**actfunc)(double)){
 
 	int i=0,col,j;
