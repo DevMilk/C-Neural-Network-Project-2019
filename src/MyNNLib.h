@@ -7,8 +7,6 @@
 #define max(a,b) (((a)>(b)) ? (a) : (b))
 
 
-//AKTİVASYON FONKSİYONLARI DOSYAYA YAZILACKA
-
 //EXAMPLE USAGE
 /*
 	#define LAYER_COUNT 4
