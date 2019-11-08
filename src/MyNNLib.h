@@ -45,6 +45,7 @@ typedef struct{
 //Neuron struct
 typedef struct{
 	double data;
+	double netData;////////////////////////	
 	double derived_Data;
 }NEURON;
 
@@ -185,10 +186,11 @@ void *threadfeed(void* args){
 	int i = ((PARAM*)args)->i;
 		for(j=startIndex;j<nls;j++){
 			X=0;
-			for(k=0;k<neuronsize;k++){ 
+			for(k=0;k<neuronsize;k++)
 					X += network->layers[i].neurons[k].data*weights[i][j+k*nls];
-			}
 			X+=network->bias[i];
+			network->layers[i+1].neurons[j].netData=X;///////////////////////
+			
 			if(i==network->layerSize-2 && network->USE_SOFTMAX == 1)
 				network->layers[i+1].neurons[j].data=X;
 			else
@@ -243,6 +245,7 @@ void feed_forward(TOPOLOGY* network,double* input,double** weights,int dropout_r
 					X += network->layers[i].neurons[k].data*weights[i][j+k*nls];
 			}
 			X+=network->bias[i];
+			network->layers[i+1].neurons[j].netData=X; //We will use that later at backpropogation		
 			if(i==network->layerSize-2 && network->USE_SOFTMAX == 1)
 				network->layers[i+1].neurons[j].data=X;
 			else
@@ -400,7 +403,7 @@ double** backpropogation(TOPOLOGY* network,double* input,double* target, double 
 
 			//multiply with acivation derivative function 
 			if(k>1)
-				back->neurons[i].derived_Data*=actderivfunc[k-2](back->neurons[i].data);
+				back->neurons[i].derived_Data*=actderivfunc[k-2](back->neurons[i].netData); /////////////////////
 		}
 	}
 		//return new weights
