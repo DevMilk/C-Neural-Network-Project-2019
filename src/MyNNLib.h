@@ -7,7 +7,7 @@
 #define max(a,b) (((a)>(b)) ? (a) : (b))
 
 
-//EXAMPLE USAGE
+// EXAMPLE USAGE
 /*
 	#define LAYER_COUNT 4
 	#define TRAIN_SIZE 2700
